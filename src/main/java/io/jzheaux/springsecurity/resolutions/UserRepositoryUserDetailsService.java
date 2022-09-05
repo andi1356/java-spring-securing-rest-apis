@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,8 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
         public BridgeUser(User user) {
             super(user);
         }
+
+        @Override
         public List<GrantedAuthority> getAuthorities() {
             return this.userAuthorities.stream()
                     .map(UserAuthority::getAuthority)
@@ -34,16 +37,17 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
                     .collect(Collectors.toList());
         }
 
-        public boolean isAccountNonExpired() {
-            return this.enabled;
-        }
+            public boolean isAccountNonExpired() {
+                return this.enabled;
+            }
 
-        public boolean isAccountNonLocked() {
-            return this.enabled;
-        }
+            public boolean isAccountNonLocked() {
+                return this.enabled;
+            }
 
-        public boolean isCredentialsNonExpired() {
-            return this.enabled;
+            public boolean isCredentialsNonExpired() {
+                return this.enabled;
+            }
         }
     }
 }

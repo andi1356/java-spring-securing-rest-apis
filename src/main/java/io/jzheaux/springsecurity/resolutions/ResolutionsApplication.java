@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import static org.springframework.http.HttpMethod.GET;
 
@@ -19,8 +20,13 @@ public class ResolutionsApplication extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	UserDetailsService userDetailsService(UserRepository users) {
-		return new UserRepositoryUserDetailsService(users);
+	public UserDetailsService userDetailsService() {
+		return new InMemoryUserDetailsManager(
+				org.springframework.security.core.userdetails.User
+						.withUsername("user")
+						.password("{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W")
+						.authorities("resolution:read")
+						.build());
 	}
 
 	@Override
