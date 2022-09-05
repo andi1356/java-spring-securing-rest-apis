@@ -31,23 +31,22 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
 
         @Override
         public List<GrantedAuthority> getAuthorities() {
+
             return this.userAuthorities.stream()
                     .map(UserAuthority::getAuthority)
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
         }
+        public boolean isAccountNonExpired() {
+            return this.enabled;
+        }
 
-            public boolean isAccountNonExpired() {
-                return this.enabled;
-            }
+        public boolean isAccountNonLocked() {
+            return this.enabled;
+        }
 
-            public boolean isAccountNonLocked() {
-                return this.enabled;
-            }
-
-            public boolean isCredentialsNonExpired() {
-                return this.enabled;
-            }
+        public boolean isCredentialsNonExpired() {
+            return this.enabled;
         }
     }
 }
